@@ -95,6 +95,26 @@ public class PostTest extends UnitTest {
         assertNull(User.connect("bob@gmail.com", "badpassword"));
         assertNull(User.connect("tom@gmail.com", "secret"));
 
+        // Find all bob posts
+        List<Post> bobPosts = Post.find("author.email", "bob@gmail.com").fetch();
+        assertEquals(2, bobPosts.size());
+        
+        // Find all comments related to bob posts
+        List<Comment> bobComments = Comment.find("post.author.email", "bob@gmail.com").fetch();
+        assertEquals(3, bobComments.size());
+
+        // Find the most recent post
+        Post frontPost = Post.find("order by postedAt desc").first();
+        assertNotNull(frontPost);
+        assertEquals("About the model layer", frontPost.title);
+
+        // Check that this post has two comments
+        assertEquals(2, frontPost.comments.size());
+
+        // Post a new comment
+        frontPost.addComment("Jim", "Hello guys");
+        assertEquals(3, frontPost.comments.size());
+        assertEquals(4, Comment.count());
     }
     
 }
