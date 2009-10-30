@@ -2,8 +2,12 @@
   <library name="lib">
     <CLASSES>
       <root url="jar:///home/dvydra/projects/play-1.0/framework/play.jar!/" />
+      <root url="file:///home/dvydra/projects/play-1.0/framework/lib" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file:///home/dvydra/projects/play-1.0/framework/src" />
+    </SOURCES>
+    <jarDirectory url="file:///home/dvydra/projects/play-1.0/framework/lib" recursive="false" />
   </library>
 </component>
