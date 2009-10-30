@@ -79,4 +79,22 @@ public class PostTest extends UnitTest {
         assertEquals(0, Post.count());
         assertEquals(0, Comment.count());
     }
+
+    @Test
+    public void fullTest() {
+        Fixtures.load("data.yml");
+
+        //Count everything
+        assertEquals(2, User.count());
+        assertEquals(3, Post.count());
+        assertEquals(3, Comment.count());
+
+        //Try and connect as different users
+        assertNotNull(User.connect("bob@gmail.com", "secret"));
+        assertNotNull(User.connect("jeff@gmail.com", "secret"));
+        assertNull(User.connect("bob@gmail.com", "badpassword"));
+        assertNull(User.connect("tom@gmail.com", "secret"));
+
+    }
+    
 }
