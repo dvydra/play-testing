@@ -1,5 +1,7 @@
 package models;
 
+import play.data.validation.MaxSize;
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
@@ -17,14 +19,19 @@ import java.util.Date;
 
 @Entity
 public class Comment extends Model {
+    @Required
     public String author;
 
     @Lob
+    @Required
+    @MaxSize(10000)
     public String content;
 
+    @Required
     public Date postedAt;
 
     @ManyToOne
+    @Required
     public Post post;
     
     public Comment(Post post, String author, String content) {
@@ -32,6 +39,10 @@ public class Comment extends Model {
         this.author = author;
         this.content = content;
         this.postedAt = new Date();
+    }
+
+    public String toString() {
+        return String.format("Comment: %s - %s", author, postedAt.toString());
     }
 
     

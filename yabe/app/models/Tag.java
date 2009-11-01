@@ -1,13 +1,16 @@
 package models;
 
-import java.util.*;
-import javax.persistence.*;
+import play.data.validation.Required;
+import play.db.jpa.Model;
 
-import play.db.jpa.*;
+import javax.persistence.Entity;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Tag extends Model implements Comparable<Tag> {
 
+    @Required
     public String name;
 
     private Tag(String name) {
@@ -15,7 +18,7 @@ public class Tag extends Model implements Comparable<Tag> {
     }
 
     public String toString() {
-        return name;
+        return String.format("Tag: %s", name);
     }
 
     public int compareTo(Tag otherTag) {
@@ -36,4 +39,5 @@ public class Tag extends Model implements Comparable<Tag> {
         ).fetch();
         return result;
     }
+    
 }

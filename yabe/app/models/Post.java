@@ -1,20 +1,22 @@
 package models;
 
-import java.util.*;
-import javax.persistence.*;
+import play.data.validation.MaxSize;
+import play.data.validation.Required;
+import play.db.jpa.Model;
 
-import play.db.jpa.*;
+import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class Post extends Model {
 
-    public String title;
-    public Date postedAt;
+    @Required public String title;
+    @Required public Date postedAt;
 
-    @Lob
+    @Lob @Required @MaxSize(10000)
     public String content;
 
-    @ManyToOne
+    @Required @ManyToOne
     public User author;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -62,4 +64,11 @@ public class Post extends Model {
                 "select distinct p.id from Post p join p.tags as t where t.name in (:tags) group by p.id having count(t.id) = :size"
         ).bind("tags", tags).bind("size", tags.length).fetch();
     }
+
+
+    public String toString() {
+        return String.format("Post: %s, %s", title, postedAt.toString());
+    }
+
+
 }
