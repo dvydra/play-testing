@@ -1,3 +1,5 @@
+package models;
+
 import models.Comment;
 import models.Post;
 import models.User;
